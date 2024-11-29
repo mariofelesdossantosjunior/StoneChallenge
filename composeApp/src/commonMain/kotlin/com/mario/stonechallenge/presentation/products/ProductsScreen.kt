@@ -1,4 +1,4 @@
-package com.mario.stonechallenge.screen.products
+package com.mario.stonechallenge.presentation.products
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

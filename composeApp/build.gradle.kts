@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutines.android)
         }
 
         iosMain.dependencies {
@@ -53,6 +54,7 @@ kotlin {
 
             implementation(libs.navigation.compose)
             implementation(libs.viewmodel.compose)
+            implementation(libs.kotlinx.coroutines.core)
 
             implementation(libs.bundles.koin)
             implementation(libs.bundles.ktor)

@@ -1,18 +1,30 @@
 package com.mario.stonechallenge.data
 
+import com.mario.stonechallenge.data.api.DummyAPI
 import com.mario.stonechallenge.domain.Repository
-import com.mario.stonechallenge.domain.model.Product
+import com.mario.stonechallenge.domain.model.ProductModel
+import com.mario.stonechallenge.domain.model.UserModel
 
-class RepositoryImpl : Repository {
+class RepositoryImpl(
+    private val api: DummyAPI
+) : Repository {
 
-    override fun login(
+    override suspend fun login(
         user: String,
         password: String
-    ): Boolean {
-        TODO("Not yet implemented")
+    ): Result<UserModel> {
+        return api.login(
+            userName = user,
+            password = password
+        ).mapCatching {
+            it.mapTo()
+        }
     }
 
-    override fun getProducts(): List<Product> {
-        TODO("Not yet implemented")
+    override suspend fun getProducts(): Result<List<ProductModel>> {
+        return api.getAllProducts()
+            .mapCatching {
+                it.mapTo()
+            }
     }
 }

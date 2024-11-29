@@ -1,8 +1,9 @@
 package com.mario.stonechallenge.domain
 
-import com.mario.stonechallenge.domain.model.Product
+import com.mario.stonechallenge.domain.model.ProductModel
+import com.mario.stonechallenge.domain.model.UserModel
 
 interface Repository {
-    fun login(user: String, password: String): Boolean
-    fun getProducts(): List<Product>
+    suspend fun login(user: String, password: String): Result<UserModel>
+    suspend fun getProducts(): Result<List<ProductModel>>
 }

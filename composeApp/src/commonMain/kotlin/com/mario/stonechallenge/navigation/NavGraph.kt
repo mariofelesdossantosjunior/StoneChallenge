@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mario.stonechallenge.screen.login.LoginScreen
-import com.mario.stonechallenge.screen.products.ProductsScreen
+import com.mario.stonechallenge.presentation.login.LoginScreen
+import com.mario.stonechallenge.presentation.products.ProductsScreen
 
 @Composable
 fun SetupNavGraph(
