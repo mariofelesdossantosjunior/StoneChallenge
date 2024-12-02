@@ -8,7 +8,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
 
-fun Route.authRoute(jwtService: JWTService) {
+fun Route.loginRoute(jwtService: JWTService) {
 
     post {
         val loginRequest = call.receive<LoginRequest>()

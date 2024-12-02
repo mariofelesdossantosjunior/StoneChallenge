@@ -1,6 +1,6 @@
 package com.mario.plugins
 
-import com.mario.routes.authRoute
+import com.mario.routes.loginRoute
 import com.mario.routes.productRoute
 import com.mario.routes.userRoute
 import com.mario.service.JWTService
@@ -21,8 +21,8 @@ fun Application.configureRouting(
             userRoute(userService)
         }
 
-        route("/api/auth") {
-            authRoute(jwtService)
+        route("/api/login") {
+            loginRoute(jwtService)
         }
 
         route("/api/product") {

@@ -7,6 +7,10 @@ class UserService(
     private val userRepository: UserRepository
 ) {
 
+    init {
+        userRepository.loadDefaultUser()
+    }
+
     fun findAll(): List<User> {
         return userRepository.findAll()
     }
