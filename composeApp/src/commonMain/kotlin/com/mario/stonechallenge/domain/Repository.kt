@@ -6,4 +6,5 @@ import com.mario.stonechallenge.domain.model.LoginModel
 interface Repository {
     suspend fun login(user: String, password: String): Result<LoginModel>
     suspend fun getProducts(): Result<List<ProductModel>>
+    fun saveBearerToken(token: String)
 }
