@@ -49,8 +49,6 @@ class LoginViewModel(
                 password = uiState.password
             )
 
-            delay(2000)
-
             loginUseCase.invoke(params)
                 .onSuccess {
                     uiState = uiState.copy(
