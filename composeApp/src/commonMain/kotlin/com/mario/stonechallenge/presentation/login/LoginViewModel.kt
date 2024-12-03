@@ -10,6 +10,7 @@ import com.mario.stonechallenge.domain.LoginUseCase
 import com.mario.stonechallenge.presentation.login.model.LoginEvent
 import com.mario.stonechallenge.presentation.login.model.LoginUIState
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -52,7 +53,8 @@ class LoginViewModel(
 
     fun login() {
         uiState = uiState.copy(
-            isLoading = true
+            isLoading = true,
+            isFailure = false
         )
 
         viewModelScope.launch(dispatcher) {
