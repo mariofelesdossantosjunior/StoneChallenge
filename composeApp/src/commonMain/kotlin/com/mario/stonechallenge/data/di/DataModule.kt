@@ -1,6 +1,7 @@
 package com.mario.stonechallenge.data.di
 
 import com.mario.stonechallenge.data.RepositoryImpl
+import com.mario.stonechallenge.data.api.API
 import com.mario.stonechallenge.data.api.ServiceAPI
 import com.mario.stonechallenge.data.api.createHttpClient
 import com.mario.stonechallenge.domain.Repository
@@ -13,7 +14,7 @@ val dataModule = module {
         createHttpClient()
     }
 
-    single {
+    single<API> {
         ServiceAPI(get())
     }
 

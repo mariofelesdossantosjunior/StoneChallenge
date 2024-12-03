@@ -37,20 +37,6 @@ class LoginViewModel(
         }
     }
 
-    @VisibleForTesting
-    fun changeUserName(userName: String) {
-        uiState = uiState.copy(
-            userName = userName
-        )
-    }
-
-    @VisibleForTesting
-    fun changePassword(password: String) {
-        uiState = uiState.copy(
-            password = password
-        )
-    }
-
     fun login() {
         uiState = uiState.copy(
             isLoading = true,
@@ -78,5 +64,19 @@ class LoginViewModel(
                     )
                 }
         }
+    }
+
+    @VisibleForTesting
+    fun changeUserName(userName: String) {
+        uiState = uiState.copy(
+            userName = userName
+        )
+    }
+
+    @VisibleForTesting
+    fun changePassword(password: String) {
+        uiState = uiState.copy(
+            password = password
+        )
     }
 }

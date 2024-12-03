@@ -7,15 +7,20 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.mockmp)
 }
 
 kotlin {
+    jvmToolchain(17)
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
+
 
     listOf(
         iosX64(),
@@ -59,6 +64,12 @@ kotlin {
             implementation(libs.bundles.koin)
             implementation(libs.bundles.ktor)
         }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.coroutines.test)
+            implementation(libs.koin.test)
+        }
     }
 }
 
@@ -84,8 +95,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -94,3 +105,8 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+mockmp {
+    onTest {
+        withHelper()
+    }
+}

@@ -1,12 +1,12 @@
 package com.mario.stonechallenge.data
 
-import com.mario.stonechallenge.data.api.ServiceAPI
+import com.mario.stonechallenge.data.api.API
 import com.mario.stonechallenge.domain.Repository
 import com.mario.stonechallenge.domain.model.LoginModel
 import com.mario.stonechallenge.domain.model.ProductModel
 
 class RepositoryImpl(
-    private val api: ServiceAPI
+    private val api: API
 ) : Repository {
 
     override suspend fun login(

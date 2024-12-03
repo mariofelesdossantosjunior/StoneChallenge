@@ -1,8 +1,7 @@
 package com.mario.stonechallenge.data.api
 
-import com.mario.stonechallenge.data.dtos.LoginDTO
-import com.mario.stonechallenge.data.dtos.ProductsDTO
 import com.mario.stonechallenge.data.dtos.AuthDTO
+import com.mario.stonechallenge.data.dtos.LoginDTO
 import com.mario.stonechallenge.data.dtos.ProductDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,9 +13,9 @@ const val BASE_URL = "http://192.168.122.1:8080/api"
 
 class ServiceAPI(
     private val httpClient: HttpClient
-) {
+): API {
 
-    suspend fun login(
+    override suspend fun login(
         userName: String,
         password: String
     ): Result<AuthDTO> {
@@ -37,7 +36,7 @@ class ServiceAPI(
         }
     }
 
-    suspend fun getAllProducts(): Result<List<ProductDTO>> {
+    override suspend fun getAllProducts(): Result<List<ProductDTO>> {
         return try {
             val response: List<ProductDTO> = httpClient.get(
                 urlString = "$BASE_URL/product"
