@@ -8,4 +8,6 @@ interface API {
     suspend fun login(userName: String, password: String): Result<AuthDTO>
 
     suspend fun getAllProducts(): Result<List<ProductDTO>>
+
+    fun setBearerToken(token: String)
 }

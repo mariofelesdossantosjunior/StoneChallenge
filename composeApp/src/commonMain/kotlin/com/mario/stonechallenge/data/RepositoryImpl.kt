@@ -29,4 +29,8 @@ class RepositoryImpl(
                 }
             }
     }
+
+    override fun saveBearerToken(token: String) {
+        api.setBearerToken(token)
+    }
 }
