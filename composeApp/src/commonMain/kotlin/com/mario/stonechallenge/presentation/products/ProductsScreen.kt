@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.mario.stonechallenge.presentation.components.ProductsList
 import com.mario.stonechallenge.presentation.components.ProgressIndicator
 import com.mario.stonechallenge.presentation.components.TopBar
