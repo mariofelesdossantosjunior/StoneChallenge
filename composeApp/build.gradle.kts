@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -7,20 +6,15 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.mockmp)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
-    jvmToolchain(17)
-
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-
 
     listOf(
         iosX64(),
@@ -107,10 +101,4 @@ android {
 dependencies {
     implementation(libs.kotlinx.coroutines.android)
     debugImplementation(compose.uiTooling)
-}
-
-mockmp {
-    onTest {
-        withHelper()
-    }
 }

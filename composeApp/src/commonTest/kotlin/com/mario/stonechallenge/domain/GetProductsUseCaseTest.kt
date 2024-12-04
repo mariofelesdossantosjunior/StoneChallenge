@@ -1,25 +1,20 @@
 package com.mario.stonechallenge.domain
 
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
-import org.kodein.mock.Mock
-import org.kodein.mock.generated.injectMocks
-import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.Test
 
-class GetProductsUseCaseTest : TestsWithMocks() {
+class GetProductsUseCaseTest {
 
-    override fun setUpMocks() = mocker.injectMocks(this)
-
-    @Mock
-    lateinit var repository: Repository
-
-    private val useCase by withMocks {
-        GetProductsUseCase(repository)
-    }
+    private val repository = mock<Repository>()
+    private val useCase = GetProductsUseCase(repository)
 
     @Test
     fun should_invoke_repository() = runTest {
-        everySuspending {
+        everySuspend {
             repository.getProducts()
         } returns Result.success(
             emptyList()
@@ -27,7 +22,7 @@ class GetProductsUseCaseTest : TestsWithMocks() {
 
         useCase.invoke()
 
-        verifyWithSuspend {
+        verifySuspend {
             repository.getProducts()
         }
     }

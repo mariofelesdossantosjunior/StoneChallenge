@@ -1,26 +1,22 @@
 package com.mario.stonechallenge.domain
 
+import dev.mokkery.answering.returns
+import dev.mokkery.every
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
+import dev.mokkery.verify
 import kotlinx.coroutines.test.runTest
-import org.kodein.mock.Mock
-import org.kodein.mock.generated.injectMocks
-import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.Test
 
-class SaveBearerTokenUseCaseTest : TestsWithMocks() {
+class SaveBearerTokenUseCaseTest {
 
-    override fun setUpMocks() = mocker.injectMocks(this)
-
-    @Mock
-    lateinit var repository: Repository
-
-    private val useCase by withMocks {
-        SaveBearerTokenUseCase(repository)
-    }
+    private val repository = mock<Repository>()
+    private val useCase = SaveBearerTokenUseCase(repository)
 
     @Test
     fun should_invoke_repository() = runTest {
         every {
-            repository.saveBearerToken(isAny())
+            repository.saveBearerToken(any())
         } returns Unit
 
         val params = SaveBearerTokenUseCase.Params(
@@ -28,8 +24,8 @@ class SaveBearerTokenUseCaseTest : TestsWithMocks() {
         )
         useCase.invoke(params)
 
-        verifyWithSuspend {
-            repository.saveBearerToken(isAny())
+        verify {
+            repository.saveBearerToken(any())
         }
     }
 }

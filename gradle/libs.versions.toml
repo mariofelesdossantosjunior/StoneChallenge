@@ -5,25 +5,24 @@ android-minSdk = "24"
 android-targetSdk = "34"
 androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
-androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.13.1"
+androidx-constraintlayout = "2.2.0"
+androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.3"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.0"
 junit = "4.13.2"
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 ktor = "3.0.1"
 logback = "1.5.11"
 coroutines = "1.9.0"
 navigation = "2.7.0-alpha07"
 viewmodel = "2.8.0"
-koin = "3.5.6"
+koin = "4.0.0"
 koinCompose = "1.1.5"
 koinComposeViewModel = "1.2.0-Beta4"
-ksp = "2.0.21-1.0.28"
-mockmp = "2.0.0"
+mokkery = "2.6.0"
 coil = "3.0.4"
 
 [libraries]
@@ -68,7 +67,7 @@ ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation", 
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
 ktor-server-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
-ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+ktor-server-tests = { module = "io.ktor:ktor-server-tests-host", version.ref = "ktor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -79,8 +78,7 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-mockmp = { id = "org.kodein.mock.mockmp", version.ref = "mockmp" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 
 [bundles]
 koin = [

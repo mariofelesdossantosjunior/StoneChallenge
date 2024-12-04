@@ -20,6 +20,6 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.auth)
     implementation(libs.ktor.server.jwt)
-//    testImplementation(libs.ktor.server.tests)
-//    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.ktor.server.tests)
+    testImplementation(libs.kotlin.test.junit)
 }

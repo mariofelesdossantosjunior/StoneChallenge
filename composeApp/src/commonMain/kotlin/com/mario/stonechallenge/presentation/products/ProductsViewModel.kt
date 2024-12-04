@@ -1,5 +1,6 @@
 package com.mario.stonechallenge.presentation.products
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.mario.stonechallenge.domain.GetProductsUseCase
 import com.mario.stonechallenge.presentation.products.model.ProductsUIState
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProductsViewModel(
@@ -23,16 +23,14 @@ class ProductsViewModel(
         loadProducts()
     }
 
-    private fun loadProducts() {
+    @VisibleForTesting
+    fun loadProducts() {
         uiState = uiState.copy(
             isLoading = true,
             isFailure = false
         )
 
         viewModelScope.launch(dispatcher) {
-
-            delay(1000)
-
             getProductsUseCase.invoke()
                 .onSuccess {
                     uiState = uiState.copy(

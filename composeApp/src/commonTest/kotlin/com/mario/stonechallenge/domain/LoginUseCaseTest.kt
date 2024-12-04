@@ -1,36 +1,35 @@
 package com.mario.stonechallenge.domain
 
-import com.mario.stonechallenge.domain.model.LoginModel
+import com.mario.stonechallenge.fake.FakeLoginModel
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
-import org.kodein.mock.Mock
-import org.kodein.mock.generated.injectMocks
-import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.Test
 
-class LoginUseCaseTest : TestsWithMocks() {
+class LoginUseCaseTest {
 
-    override fun setUpMocks() = mocker.injectMocks(this)
-
-    @Mock
-    lateinit var repository: Repository
-
-    private val useCase by withMocks {
-        LoginUseCase(repository)
-    }
+    private val repository = mock<Repository>()
+    private val useCase = LoginUseCase(repository)
 
     @Test
     fun should_invoke_repository() = runTest {
-        everySuspending {
-            repository.login(isAny(), isAny())
+        everySuspend {
+            repository.login(any(), any())
         } returns Result.success(
-            LoginModel(token = "token")
+            FakeLoginModel.mock()
         )
 
-        val params = LoginUseCase.Params(userName = "user", password = "password")
+        val params = LoginUseCase.Params(
+            userName = "user",
+            password = "password"
+        )
         useCase.invoke(params)
 
-        verifyWithSuspend {
-            repository.login(isAny(), isAny())
+        verifySuspend {
+            repository.login(any(), any())
         }
     }
 }

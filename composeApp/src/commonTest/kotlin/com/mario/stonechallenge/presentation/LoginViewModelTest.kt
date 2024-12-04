@@ -3,9 +3,15 @@ package com.mario.stonechallenge.presentation
 import com.mario.stonechallenge.domain.LoginUseCase
 import com.mario.stonechallenge.domain.Repository
 import com.mario.stonechallenge.domain.SaveBearerTokenUseCase
-import com.mario.stonechallenge.domain.model.LoginModel
+import com.mario.stonechallenge.fake.FakeLoginModel
 import com.mario.stonechallenge.presentation.login.LoginViewModel
 import com.mario.stonechallenge.presentation.login.model.LoginEvent
+import dev.mokkery.answering.returns
+import dev.mokkery.every
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
+import dev.mokkery.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -13,9 +19,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.kodein.mock.Mock
-import org.kodein.mock.generated.injectMocks
-import org.kodein.mock.tests.TestsWithMocks
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -23,30 +26,25 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@ExperimentalCoroutinesApi
-class LoginViewModelTest : TestsWithMocks() {
+
+class LoginViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
-
-    override fun setUpMocks() = mocker.injectMocks(this)
-
-    @Mock
-    lateinit var repository: Repository
-
-    private lateinit var loginUseCase: LoginUseCase
-    private lateinit var saveBearerTokenUseCase: SaveBearerTokenUseCase
+    private val repository = mock<Repository>()
     private lateinit var viewModel: LoginViewModel
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeTest
     fun setUp() {
-        loginUseCase = LoginUseCase(repository)
-        saveBearerTokenUseCase = SaveBearerTokenUseCase(repository)
 
         viewModel = LoginViewModel(
             dispatcher = testDispatcher,
-            loginUseCase = loginUseCase,
-            saveBearerTokenUseCase = saveBearerTokenUseCase
+            loginUseCase = LoginUseCase(
+                repository = repository
+            ),
+            saveBearerTokenUseCase = SaveBearerTokenUseCase(
+                repository = repository
+            )
         )
 
         Dispatchers.setMain(testDispatcher)
@@ -80,29 +78,27 @@ class LoginViewModelTest : TestsWithMocks() {
         assertEquals(fakePassword, viewModel.uiState.password)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun on_event_should_invoke_login_when_success() = runTest {
-        val fakeUserName = "admin"
-        val fakePassword = "123"
-        val fakeToken = "token"
-
         every {
-            saveBearerTokenUseCase.invoke(
-                SaveBearerTokenUseCase.Params(
-                    bearerToken = fakeToken
-                )
-            )
+            repository.saveBearerToken(any())
         } returns Unit
 
-        everySuspending {
-            loginUseCase.invoke(
-                LoginUseCase.Params(
-                    userName = fakeUserName,
-                    password = fakePassword
-                )
-            )
+        everySuspend {
+            repository.login(any(), any())
         } returns Result.success(
-            value = LoginModel(token = "token")
+            FakeLoginModel.mock()
+        )
+
+        viewModel = LoginViewModel(
+            dispatcher = testDispatcher,
+            loginUseCase = LoginUseCase(
+                repository = repository
+            ),
+            saveBearerTokenUseCase = SaveBearerTokenUseCase(
+                repository = repository
+            )
         )
 
         viewModel.onEvent(
@@ -114,20 +110,23 @@ class LoginViewModelTest : TestsWithMocks() {
         assertTrue(viewModel.uiState.isLoggedIn)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun on_event_should_invoke_login_when_failure() = runTest {
-        val fakeUserName = "admin"
-        val fakePassword = "123"
-
-        everySuspending {
-            loginUseCase.invoke(
-                LoginUseCase.Params(
-                    userName = fakeUserName,
-                    password = fakePassword
-                )
-            )
+        everySuspend {
+            repository.login(any(), any())
         } returns Result.failure(
-            exception = Exception("Falha ao logar")
+            exception = Exception("Failure")
+        )
+
+        viewModel = LoginViewModel(
+            dispatcher = testDispatcher,
+            loginUseCase = LoginUseCase(
+                repository = repository
+            ),
+            saveBearerTokenUseCase = SaveBearerTokenUseCase(
+                repository = repository
+            )
         )
 
         viewModel.onEvent(
@@ -140,17 +139,12 @@ class LoginViewModelTest : TestsWithMocks() {
         assertTrue(viewModel.uiState.isFailure)
     }
 
-
     @Test
     fun on_event_should_invoke_save_bearer_token() = runTest {
         val fakeToken = "token"
 
         every {
-            saveBearerTokenUseCase.invoke(
-                SaveBearerTokenUseCase.Params(
-                    bearerToken = fakeToken
-                )
-            )
+            repository.saveBearerToken(any())
         } returns Unit
 
         viewModel.saveBearerToken(
@@ -158,11 +152,7 @@ class LoginViewModelTest : TestsWithMocks() {
         )
 
         verify {
-            saveBearerTokenUseCase.invoke(
-                SaveBearerTokenUseCase.Params(
-                    bearerToken = fakeToken
-                )
-            )
+            repository.saveBearerToken(any())
         }
     }
 }
