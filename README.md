@@ -85,3 +85,11 @@ Para executar os testes utilize o seguinte comando:
 ```plaintext
 ./gradlew test
 ```
+
+---
+
+## **demonstração aplicação**
+
+[Screen_recording_20241204_135041.webm](https://github.com/user-attachments/assets/4501fb4a-24a5-4228-b52a-c255642306de)
+
+
