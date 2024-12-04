@@ -61,8 +61,13 @@ kotlin {
             implementation(libs.viewmodel.compose)
             implementation(libs.kotlinx.coroutines.core)
 
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network)
+
             implementation(libs.bundles.koin)
+
             implementation(libs.bundles.ktor)
+
         }
 
         commonTest.dependencies {

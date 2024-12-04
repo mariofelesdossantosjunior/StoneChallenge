@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.mario.stonechallenge.di.initializeKoin
 import com.mario.stonechallenge.presentation.login.LoginScreen
+import com.mario.stonechallenge.presentation.products.ProductsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +32,13 @@ fun AppAndroidPreview() {
 fun LoginScreenPreview() {
     LoginScreen(
         navigateToProducts = {}
+    )
+}
+
+@Preview
+@Composable
+fun ProductsScreenPreview() {
+    ProductsScreen(
+        goBackToLogin = {}
     )
 }

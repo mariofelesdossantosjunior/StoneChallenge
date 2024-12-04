@@ -9,7 +9,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.HttpHeaders
-import io.ktor.http.headers
+import io.ktor.client.request.headers
 
 const val BASE_URL = "http://192.168.122.1:8080/api"
 
@@ -41,6 +41,7 @@ class ServiceAPI(
     }
 
     override suspend fun getAllProducts(): Result<List<ProductDTO>> {
+        val token = this.token ?: return Result.failure(Exception("Token not found"))
         return try {
             val response: List<ProductDTO> = httpClient.get(
                 urlString = "$BASE_URL/product"

@@ -2,6 +2,7 @@ package com.mario.stonechallenge.presentation
 
 import com.mario.stonechallenge.domain.LoginUseCase
 import com.mario.stonechallenge.domain.Repository
+import com.mario.stonechallenge.domain.SaveBearerTokenUseCase
 import com.mario.stonechallenge.domain.model.LoginModel
 import com.mario.stonechallenge.presentation.login.LoginViewModel
 import com.mario.stonechallenge.presentation.login.model.LoginEvent
@@ -33,16 +34,19 @@ class LoginViewModelTest : TestsWithMocks() {
     lateinit var repository: Repository
 
     private lateinit var loginUseCase: LoginUseCase
+    private lateinit var saveBearerTokenUseCase: SaveBearerTokenUseCase
     private lateinit var viewModel: LoginViewModel
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeTest
     fun setUp() {
         loginUseCase = LoginUseCase(repository)
+        saveBearerTokenUseCase = SaveBearerTokenUseCase(repository)
 
         viewModel = LoginViewModel(
             dispatcher = testDispatcher,
-            loginUseCase = loginUseCase
+            loginUseCase = loginUseCase,
+            saveBearerTokenUseCase = saveBearerTokenUseCase
         )
 
         Dispatchers.setMain(testDispatcher)
@@ -80,6 +84,15 @@ class LoginViewModelTest : TestsWithMocks() {
     fun on_event_should_invoke_login_when_success() = runTest {
         val fakeUserName = "admin"
         val fakePassword = "123"
+        val fakeToken = "token"
+
+        every {
+            saveBearerTokenUseCase.invoke(
+                SaveBearerTokenUseCase.Params(
+                    bearerToken = fakeToken
+                )
+            )
+        } returns Unit
 
         everySuspending {
             loginUseCase.invoke(
@@ -125,5 +138,31 @@ class LoginViewModelTest : TestsWithMocks() {
 
         assertFalse(viewModel.uiState.isLoggedIn)
         assertTrue(viewModel.uiState.isFailure)
+    }
+
+
+    @Test
+    fun on_event_should_invoke_save_bearer_token() = runTest {
+        val fakeToken = "token"
+
+        every {
+            saveBearerTokenUseCase.invoke(
+                SaveBearerTokenUseCase.Params(
+                    bearerToken = fakeToken
+                )
+            )
+        } returns Unit
+
+        viewModel.saveBearerToken(
+            token = fakeToken
+        )
+
+        verify {
+            saveBearerTokenUseCase.invoke(
+                SaveBearerTokenUseCase.Params(
+                    bearerToken = fakeToken
+                )
+            )
+        }
     }
 }

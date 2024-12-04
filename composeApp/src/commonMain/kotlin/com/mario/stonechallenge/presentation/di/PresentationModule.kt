@@ -11,7 +11,8 @@ val presentationModule = module {
     viewModel {
         LoginViewModel(
             dispatcher = Dispatchers.IO,
-            loginUseCase = get()
+            loginUseCase = get(),
+            saveBearerTokenUseCase = get()
         )
     }
 

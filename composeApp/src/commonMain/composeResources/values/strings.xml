@@ -1,9 +1,9 @@
 <resources>
-    <string name="name">Nome de usuário</string>
-    <string name="password">Senha</string>
-    <string name="login">Entrar</string>
-    <string name="login_failure">Falha ao entrar, tente novamente.</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="login_failure">Failed to log in, please try again.</string>
 
-    <string name="products">Produtos</string>
-    <string name="message_failure">Falha ao ao buscar os produtos, tente novamente.</string>
+    <string name="products">Products</string>
+    <string name="message_failure">Failed to fetch products, please try again.</string>
 </resources>

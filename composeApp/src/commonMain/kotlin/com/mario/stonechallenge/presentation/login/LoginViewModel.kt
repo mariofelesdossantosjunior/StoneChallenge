@@ -7,15 +7,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mario.stonechallenge.domain.LoginUseCase
+import com.mario.stonechallenge.domain.SaveBearerTokenUseCase
 import com.mario.stonechallenge.presentation.login.model.LoginEvent
 import com.mario.stonechallenge.presentation.login.model.LoginUIState
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val dispatcher: CoroutineDispatcher,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val saveBearerTokenUseCase: SaveBearerTokenUseCase
 ) : ViewModel() {
 
     var uiState by mutableStateOf(LoginUIState())
@@ -55,6 +56,7 @@ class LoginViewModel(
                         isLoading = false,
                         isLoggedIn = true
                     )
+                    saveBearerToken(it.token)
                 }.onFailure {
                     uiState = uiState.copy(
                         isLoading = false,
@@ -76,5 +78,13 @@ class LoginViewModel(
         uiState = uiState.copy(
             password = password
         )
+    }
+
+    @VisibleForTesting
+    fun saveBearerToken(token: String?) {
+        val params = SaveBearerTokenUseCase.Params(
+            bearerToken = token ?: ""
+        )
+        saveBearerTokenUseCase.invoke(params)
     }
 }
