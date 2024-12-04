@@ -11,6 +11,7 @@ import com.mario.stonechallenge.domain.SaveBearerTokenUseCase
 import com.mario.stonechallenge.presentation.login.model.LoginEvent
 import com.mario.stonechallenge.presentation.login.model.LoginUIState
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -49,6 +50,8 @@ class LoginViewModel(
                 userName = uiState.userName,
                 password = uiState.password
             )
+
+            delay(1000)
 
             loginUseCase.invoke(params)
                 .onSuccess {

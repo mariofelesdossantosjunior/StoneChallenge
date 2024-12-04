@@ -31,7 +31,7 @@ class ProductsViewModel(
 
         viewModelScope.launch(dispatcher) {
 
-            delay(2000)
+            delay(1000)
 
             getProductsUseCase.invoke()
                 .onSuccess {
