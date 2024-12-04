@@ -1,14 +1,87 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# **Documentação do Projeto**
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+## **Introdução**
+- **Nome do Projeto**: StoneChallenge
+- **Descrição**: Um projeto multiplataforma desenvolvido em Kotlin para compartilhar código entre Android e iOS.
+- **Tecnologias Usadas**: Kotlin Multiplatform, Koin, Ktor(Server/Client), Kotlinx Serialization, Kotlinx Coroutines, Coil.
+- **Arquitetura**: Clean Arch, MVVM/MVI.
+- **Backend**: Local implementado com Ktor.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+---
 
+## **Funcionalidades**
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+- **Lógica de Negócios Compartilhada**: Reutilização de código em diferentes plataformas.
+- **Injeção de dependência com Koin**: Implementado com [Koin](https://insert-koin.io/docs/reference/koin-mp/kmp).
+- **Integração com APIs REST**: Implementado com [Ktor](https://ktor.io).
+- **Carregamento de imagem**: Implementado com [Coil](https://github.com/coil-kt/coil).
+- **Suporte a Coroutines**: Operações assíncronas eficientes.
+- **Testes Unificados**: Testes unitários utilizando Kotlin Test, Coroutines Test, e [Mokkery](https://mokkery.dev/).
+
+---
+
+## **Estrutura do Projeto**
+O projeto segue a seguinte estrutura:
+
+```plaintext
+- stone-challenge/
+  - androidMain/     # Código específico para Android
+  - commonMain/      # Código comum para todas as plataformas
+  - commonTest/      # Testes do código comum
+  - iosMain/         # Código específico para iOS
+  - build.gradle.kts # Configuração do Gradle
+```
+
+---
+
+## **Estrutura do Projeto Backend**
+O projeto segue a seguinte estrutura:
+
+```plaintext
+- backend-stone-challenge/
+  - main/         # Código
+  - build.gradle.kts # Configuração do Gradle
+```
+
+---
+
+## **Execução do backend**
+Para executar o backend será necessário executar a função main:
+
+```plaintext
+- server/src/main/kotlin/com/mario/Application.kt
+```
+Servidor está configurado pra subir **LocalHoost** porta **8080**
+
+---
+
+## **Execução do Aplicativo**
+Para executar o aplicativo será necessário as seguintes configurações:
+1. Configuração do IP do servidor
+   Defina seu IP, onde está executando servidor Ktor,para descobrir seu ip utilize:
+
+```plaintext
+  ifconfig
+```
+
+2. Defina seu IP no seguinte arquivo
+   Altere a variável **IP**
+
+```plaintext
+- composeApp/src/commonMain/kotlin/com/mario/stonechallenge/data/api/ServerConfig.kt
+```
+
+3. Após servidor em execução, executar o aplicação através Android Studio ou Terminal
+
+4. Usuário e Senha **padrão** já definidos nos inputs 
+   Usuário: admin
+   Senha: 123
+
+---
+
+## **Execução dos Testes**
+Para executar os testes utilize o seguinte comando:
+
+```plaintext
+./gradlew test
+```

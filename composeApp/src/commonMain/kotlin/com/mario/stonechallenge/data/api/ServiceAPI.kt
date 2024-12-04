@@ -6,12 +6,10 @@ import com.mario.stonechallenge.data.dtos.ProductDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.HttpHeaders
-import io.ktor.client.request.headers
-
-const val BASE_URL = "http://192.168.122.1:8080/api"
 
 class ServiceAPI(
     private val httpClient: HttpClient
@@ -25,7 +23,7 @@ class ServiceAPI(
     ): Result<AuthDTO> {
         return try {
             val response: AuthDTO = httpClient.post(
-                urlString = "$BASE_URL/login"
+                urlString = "${ServerConfig.BASE_URL}/login"
             ) {
                 setBody(
                     LoginDTO(
@@ -44,7 +42,7 @@ class ServiceAPI(
         val token = this.token ?: return Result.failure(Exception("Token not found"))
         return try {
             val response: List<ProductDTO> = httpClient.get(
-                urlString = "$BASE_URL/product"
+                urlString = "${ServerConfig.BASE_URL}/product"
             ) {
                 headers {
                     append(
